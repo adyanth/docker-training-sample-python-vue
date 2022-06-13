@@ -1,0 +1,21 @@
+# Build stage for Frontend
+FROM node:alpine as fancyui-build
+WORKDIR /app/ui
+COPY fancyui/package*.json ./
+RUN npm install
+COPY fancyui/ .
+RUN npm run build
+
+# Final container image for backend
+FROM python:alpine
+WORKDIR /app/backend
+RUN apk --no-cache add gcc g++ \ 
+    musl-dev libffi-dev python3-dev
+COPY backend/requirements.txt .
+RUN pip install -r requirements.txt
+COPY backend/ .
+# Inject frontend build output to backend image
+COPY --from=fancyui-build /app/ui/dist ui
+EXPOSE 10000
+ENTRYPOINT [ "uvicorn" ]
+CMD [ "main:app", "--host=0.0.0.0", "--port=8080" ]
