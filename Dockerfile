@@ -4,9 +4,9 @@ FROM python:alpine
 # Working directory (current directory)
 WORKDIR /app/backend
 
-# Run some commands as a part of the container image build step
-RUN apk --no-cache add gcc g++ \ 
-    musl-dev libffi-dev python3-dev
+# Run some commands as a part of the container image build step if needed
+# RUN apk --no-cache add gcc g++ \ 
+#     musl-dev libffi-dev python3-dev
 
 # Copy files into the container file system
 COPY backend/requirements.txt .
