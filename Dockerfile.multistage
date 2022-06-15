@@ -14,6 +14,6 @@ RUN pip install -r requirements.txt
 COPY backend/ .
 # Inject frontend build output to backend image
 COPY --from=fancyui-build /app/ui/dist ui
-EXPOSE 10000
+EXPOSE 8080
 ENTRYPOINT [ "uvicorn" ]
 CMD [ "main:app", "--host=0.0.0.0", "--port=8080" ]

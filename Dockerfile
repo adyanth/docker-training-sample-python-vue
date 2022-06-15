@@ -17,7 +17,7 @@ COPY backend/ .
 COPY ui ui
 
 # Hint to the container runtime of ports being used
-EXPOSE 10000
+EXPOSE 8080
 
 # Entrypoint to be executed when the container runs, can be overriden
 ENTRYPOINT [ "uvicorn" ]
