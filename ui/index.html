@@ -7,6 +7,13 @@
     <title>Sample HTML</title>
 </head>
 <body>
-    <h1>Hello folks!</h1>
+    <h1 id="greeting">Hello folks!</h1>
+    <script>
+        fetch("/api/v1/greeting")
+        .then(resp => resp.json())
+        .then(data=>{
+            document.getElementById("greeting").innerText = data.msg;
+        })
+    </script>
 </body>
 </html>

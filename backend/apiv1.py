@@ -1,7 +1,15 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 import yaml
+import os
 
 api = FastAPI()
+
+
+@api.get("/greeting")
+def greet():
+    name = os.environ.get("GREET_NAME", "")
+    return {"msg": f"Hello {name}!"}
+
 
 @api.post("/yamljson")
 async def yamlToJson(file: UploadFile = File(...)):
