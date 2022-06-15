@@ -1,0 +1,11 @@
+# Build stage for Frontend
+FROM node:alpine as fancyui-build
+WORKDIR /app/ui
+COPY fancyui/package*.json ./
+RUN npm install
+COPY fancyui/ .
+RUN npm run build
+
+# Final container image for serving UI
+FROM nginx:alpine
+COPY --from=fancyui-build /app/ui/dist /usr/share/nginx/html/ui

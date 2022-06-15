@@ -10,4 +10,23 @@ services:
       - 8080:8080
     environment:
       GREET_NAME: CWiCS BOOST attendees
+    expose:
+      - 8080
 
+  simplenginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ui:/usr/share/nginx/html/ui/
+    ports:
+      - 8081:8080
+
+  fancynginx:
+    image: sample-app:frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8082:8080
