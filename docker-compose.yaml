@@ -8,6 +8,9 @@ services:
       # dockerfile: Dockerfile.multistage
     ports:
       - 8080:8080
+    networks:
+      - default
+      - backend
     environment:
       GREET_NAME: CWiCS BOOST attendees
     expose:
@@ -30,3 +33,21 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 8082:8080
+    networks:
+      - backend
+
+  blockednginx:
+    image: sample-app:frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8083:8080
+    networks:
+      - sample
+
+networks:
+  backend:
+  sample:
